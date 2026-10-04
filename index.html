@@ -408,15 +408,43 @@
         }
 
         .arcade-art {
-            background: radial-gradient(circle at 50% 55%, #fed56a 0 8%, transparent 8.5%), linear-gradient(145deg, #4c97ff 0 45%, #2864bf 45%);
+            min-height: 180px;
+            background: #19321c;
+        }
+
+        .arcade-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .story-art {
-            background: radial-gradient(ellipse at 65% 25%, #ffdc75 0 9%, transparent 10%), linear-gradient(145deg, #855cd6, #5135a3);
+            background: #075d91;
+        }
+
+        .story-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .animation-art {
-            background: radial-gradient(circle at 30% 65%, #ffab19 0 9%, transparent 9.5%), linear-gradient(145deg, #0fbd8c, #08785b);
+            background: #50d800;
+        }
+
+        .animation-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .project-art span {
@@ -575,6 +603,18 @@
 
             .project-card:hover .project-art {
                 filter: saturate(1.2);
+            }
+
+            .project-card:hover .arcade-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .story-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .animation-art img {
+                transform: scale(1.04);
             }
 
             .project-card:hover .project-art span {
@@ -779,7 +819,9 @@
             </div>
             <div class="project-grid">
                 <article class="project-card reveal">
-                    <div class="project-art arcade-art" aria-hidden="true"><span>ARCADE</span></div>
+                    <div class="project-art arcade-art">
+                        <img src="assets/arcade-game.png" alt="Screenshot des Arcade-Spiels mit Figuren, Sternen und Boost- sowie Gesundheitsanzeige">
+                    </div>
                     <div class="project-info">
                         <p class="project-type">Spiel</p>
                         <h3>Dein Arcade-Spiel</h3>
@@ -787,7 +829,9 @@
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art story-art" aria-hidden="true"><span>STORY</span></div>
+                    <div class="project-art story-art">
+                        <img src="assets/story-game.png" alt="Screenshot einer interaktiven Geschichte mit einer Figur in einem blauen Neon-Tunnel">
+                    </div>
                     <div class="project-info">
                         <p class="project-type">Interaktive Geschichte</p>
                         <h3>Deine Geschichte</h3>
@@ -795,7 +839,9 @@
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art animation-art" aria-hidden="true"><span>ANIMATION</span></div>
+                    <div class="project-art animation-art">
+                        <img src="assets/experiment-game.png" alt="Screenshot einer Scratch-Animation mit einer Katze, grünen Hügeln und einer Sonne">
+                    </div>
                     <div class="project-info">
                         <p class="project-type">Animation</p>
                         <h3>Dein Experiment</h3>
