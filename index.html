@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ffab19">
-    <title>Scratch-Portfolio</title>
+    <title>mr---magic</title>
     <script>document.documentElement.classList.add("js");</script>
     <style>
         :root {
@@ -91,8 +91,12 @@
             transition: transform 180ms ease;
         }
 
-        .brand-dot {
-            color: var(--scratch-deep);
+        .brand-wordmark {
+            display: block;
+            width: clamp(78px, 8vw, 105px);
+            height: auto;
+            transform-origin: center;
+            transition: filter 180ms ease, transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .main-nav {
@@ -725,6 +729,11 @@
                 transform: rotate(-6deg) scale(1.08);
             }
 
+            .brand:hover .brand-wordmark {
+                filter: drop-shadow(0 3px 0 rgb(150 84 0 / 24%));
+                transform: translateY(-2px) rotate(-2deg) scale(1.06);
+            }
+
             .about-stamp:hover {
                 background: #fffdf9;
                 box-shadow: 0 10px 24px rgb(48 39 29 / 9%);
@@ -918,9 +927,9 @@
 <body>
     <div class="scroll-progress" aria-hidden="true"></div>
     <header class="site-header">
-        <a class="brand" href="#home" aria-label="Scratch-Portfolio, Startseite">
+        <a class="brand" href="https://scratch.mit.edu/" aria-label="Scratch-Website öffnen" target="_blank" rel="noopener noreferrer">
             <img class="brand-mark" src="assets/logo.png" alt="" aria-hidden="true">
-            <span>scratch<span class="brand-dot">.</span></span>
+            <img class="brand-wordmark" src="assets/scratch-wordmark.png" alt="Scratch">
         </a>
         <nav class="main-nav" aria-label="Hauptnavigation">
             <a class="nav-link" href="#home" aria-current="location">Home</a>
@@ -1071,9 +1080,10 @@
             <div class="game-carousel-shell">
                 <div class="game-embed reveal" id="game-carousel" role="region" aria-label="Scratch-Spiele, mit den Pfeiltasten navigierbar" tabindex="0">
                     <div class="game-slide">
+                        <h3>EVADE!</h3>
                         <iframe
                             src="https://scratch.mit.edu/projects/1252260834/embed"
-                            title="Scratch-Spiel 1"
+                            title="EVADE!"
                             allowtransparency="true"
                             width="485"
                             height="402"
@@ -1082,9 +1092,10 @@
                         </iframe>
                     </div>
                     <div class="game-slide">
+                        <h3>Labyrinth</h3>
                         <iframe
-                            src="https://scratch.mit.edu/projects/1219562786/embed"
-                            title="Scratch-Spiel 2"
+                            src="https://scratch.mit.edu/projects/1211188210/embed"
+                            title="Labyrinth"
                             allowtransparency="true"
                             width="485"
                             height="402"
@@ -1093,9 +1104,10 @@
                         </iframe>
                     </div>
                     <div class="game-slide">
+                        <h3>Cargame</h3>
                         <iframe
                             src="https://scratch.mit.edu/projects/1238338425/embed"
-                            title="Scratch-Spiel 3"
+                            title="Cargame"
                             allowtransparency="true"
                             width="485"
                             height="402"
@@ -1124,7 +1136,7 @@
             <div class="section-heading reveal">
                 <p class="section-label">05 / Rechtliches</p>
                 <h2>Impressum</h2>
-                <p>Angaben gemäß § 5 TMG</p>
+                <p></p>
                 <p></p>
             </div>
         </section>
