@@ -617,8 +617,23 @@
         }
 
         .game-embed {
+            display: flex;
+            gap: 1.1rem;
+            overflow-x: auto;
+            padding: 0.5rem 0 1rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .game-embed::-webkit-scrollbar {
+            display: none;
+        }
+
+        .game-slide {
             display: grid;
+            flex: 0 0 100%;
             justify-items: center;
+            scroll-snap-align: start;
         }
 
         .game-embed iframe {
@@ -630,6 +645,11 @@
             border-radius: 8px;
             background: #fffdf9;
             box-shadow: 0 12px 30px rgb(48 39 29 / 15%);
+        }
+
+        .game-carousel-shell {
+            position: relative;
+            padding-inline: 4.5rem;
         }
 
         .contact-section {
@@ -859,7 +879,8 @@
                 flex-basis: 100%;
             }
 
-            .project-carousel-shell {
+            .project-carousel-shell,
+            .game-carousel-shell {
                 padding-inline: 3.3rem;
             }
 
@@ -1047,16 +1068,46 @@
                 <p class="section-label">03 / Zum Ausprobieren</p>
                 <h2>Spiel</h2>
             </div>
-            <div class="game-embed reveal">
-                <iframe
-                    src="https://scratch.mit.edu/projects/1252260834/embed"
-                    title="Scratch-Spiel"
-                    allowtransparency="true"
-                    width="485"
-                    height="402"
-                    scrolling="no"
-                    allowfullscreen>
-                </iframe>
+            <div class="game-carousel-shell">
+                <div class="game-embed reveal" id="game-carousel" role="region" aria-label="Scratch-Spiele, mit den Pfeiltasten navigierbar" tabindex="0">
+                    <div class="game-slide">
+                        <iframe
+                            src="https://scratch.mit.edu/projects/1252260834/embed"
+                            title="Scratch-Spiel 1"
+                            allowtransparency="true"
+                            width="485"
+                            height="402"
+                            scrolling="no"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="game-slide">
+                        <iframe
+                            src="https://scratch.mit.edu/projects/1219562786/embed"
+                            title="Scratch-Spiel 2"
+                            allowtransparency="true"
+                            width="485"
+                            height="402"
+                            scrolling="no"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="game-slide">
+                        <iframe
+                            src="https://scratch.mit.edu/projects/1238338425/embed"
+                            title="Scratch-Spiel 3"
+                            allowtransparency="true"
+                            width="485"
+                            height="402"
+                            scrolling="no"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="project-controls" aria-label="Spiel-Navigation">
+                    <button class="project-arrow" type="button" data-game-direction="-1" aria-label="Vorheriges Spiel" disabled>←</button>
+                    <button class="project-arrow" type="button" data-game-direction="1" aria-label="Nächstes Spiel">→</button>
+                </div>
             </div>
         </section>
 
@@ -1133,88 +1184,93 @@
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         const projectCarousel = document.querySelector("#project-carousel");
-        const projectCards = projectCarousel.querySelectorAll(".project-card");
-        const projectArrows = document.querySelectorAll(".project-arrow");
-        let pointerOverProjects = false;
-        let projectScrollAnimation = 0;
+        const setupCarousel = (carousel, directionAttribute) => {
+            const slides = carousel.children;
+            const arrows = carousel.parentElement.querySelectorAll(`[${directionAttribute}]`);
+            let pointerOverCarousel = false;
+            let scrollAnimation = 0;
 
-        const cancelProjectScroll = () => {
-            cancelAnimationFrame(projectScrollAnimation);
-            projectScrollAnimation = 0;
-            projectCarousel.style.removeProperty("scroll-snap-type");
-        };
-
-        const updateProjectArrows = () => {
-            const maxScroll = projectCarousel.scrollWidth - projectCarousel.clientWidth;
-            projectArrows.forEach((button) => {
-                const direction = Number(button.dataset.projectDirection);
-                button.disabled = direction < 0
-                    ? projectCarousel.scrollLeft <= 1
-                    : projectCarousel.scrollLeft >= maxScroll - 1;
-            });
-        };
-
-        const moveProjects = (direction) => {
-            const card = projectCards[0];
-            const cardGap = Number.parseFloat(getComputedStyle(projectCarousel).columnGap) || 0;
-            const maxScroll = projectCarousel.scrollWidth - projectCarousel.clientWidth;
-            const start = projectCarousel.scrollLeft;
-            const target = Math.max(0, Math.min(maxScroll, start + direction * (card.getBoundingClientRect().width + cardGap)));
-
-            cancelProjectScroll();
-            if (prefersReducedMotion) {
-                projectCarousel.scrollLeft = target;
-                return;
-            }
-
-            projectCarousel.style.scrollSnapType = "none";
-            const duration = 420;
-            const startedAt = performance.now();
-            const animateScroll = (now) => {
-                const progress = Math.min((now - startedAt) / duration, 1);
-                const easedProgress = 1 - (1 - progress) ** 3;
-                projectCarousel.scrollLeft = start + (target - start) * easedProgress;
-                if (progress < 1) {
-                    projectScrollAnimation = requestAnimationFrame(animateScroll);
-                } else {
-                    projectScrollAnimation = 0;
-                    projectCarousel.style.removeProperty("scroll-snap-type");
-                }
+            const cancelScroll = () => {
+                cancelAnimationFrame(scrollAnimation);
+                scrollAnimation = 0;
+                carousel.style.removeProperty("scroll-snap-type");
             };
-            projectScrollAnimation = requestAnimationFrame(animateScroll);
+
+            const updateArrows = () => {
+                const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                arrows.forEach((button) => {
+                    const direction = Number(button.getAttribute(directionAttribute));
+                    button.disabled = direction < 0
+                        ? carousel.scrollLeft <= 1
+                        : carousel.scrollLeft >= maxScroll - 1;
+                });
+            };
+
+            const move = (direction) => {
+                const slide = slides[0];
+                const gap = Number.parseFloat(getComputedStyle(carousel).columnGap) || 0;
+                const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                const start = carousel.scrollLeft;
+                const target = Math.max(0, Math.min(maxScroll, start + direction * (slide.getBoundingClientRect().width + gap)));
+
+                cancelScroll();
+                if (prefersReducedMotion) {
+                    carousel.scrollLeft = target;
+                    return;
+                }
+
+                carousel.style.scrollSnapType = "none";
+                const duration = 420;
+                const startedAt = performance.now();
+                const animateScroll = (now) => {
+                    const progress = Math.min((now - startedAt) / duration, 1);
+                    const easedProgress = 1 - (1 - progress) ** 3;
+                    carousel.scrollLeft = start + (target - start) * easedProgress;
+                    if (progress < 1) {
+                        scrollAnimation = requestAnimationFrame(animateScroll);
+                    } else {
+                        scrollAnimation = 0;
+                        carousel.style.removeProperty("scroll-snap-type");
+                    }
+                };
+                scrollAnimation = requestAnimationFrame(animateScroll);
+            };
+
+            arrows.forEach((button) => {
+                button.addEventListener("click", () => move(Number(button.getAttribute(directionAttribute))));
+            });
+            carousel.addEventListener("wheel", cancelScroll, { passive: true });
+            carousel.addEventListener("pointerdown", cancelScroll, { passive: true });
+            carousel.addEventListener("touchstart", cancelScroll, { passive: true });
+            carousel.addEventListener("scroll", updateArrows, { passive: true });
+            window.addEventListener("resize", updateArrows);
+            carousel.addEventListener("pointerenter", () => { pointerOverCarousel = true; });
+            carousel.addEventListener("pointerleave", () => { pointerOverCarousel = false; });
+            window.addEventListener("keydown", (event) => {
+                if (
+                    event.target instanceof HTMLElement
+                    && (event.target.isContentEditable || event.target.matches("input, textarea, select"))
+                ) {
+                    return;
+                }
+
+                if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+                    return;
+                }
+
+                const isInteractingWithCarousel = pointerOverCarousel
+                    || carousel.contains(document.activeElement)
+                    || Array.from(arrows).includes(document.activeElement);
+                if (isInteractingWithCarousel) {
+                    event.preventDefault();
+                    move(event.key === "ArrowRight" ? 1 : -1);
+                }
+            });
+            updateArrows();
         };
 
-        projectArrows.forEach((button) => {
-            button.addEventListener("click", () => moveProjects(Number(button.dataset.projectDirection)));
-        });
-        projectCarousel.addEventListener("wheel", cancelProjectScroll, { passive: true });
-        projectCarousel.addEventListener("pointerdown", cancelProjectScroll, { passive: true });
-        projectCarousel.addEventListener("touchstart", cancelProjectScroll, { passive: true });
-        projectCarousel.addEventListener("scroll", updateProjectArrows, { passive: true });
-        window.addEventListener("resize", updateProjectArrows);
-        projectCarousel.addEventListener("pointerenter", () => { pointerOverProjects = true; });
-        projectCarousel.addEventListener("pointerleave", () => { pointerOverProjects = false; });
-        window.addEventListener("keydown", (event) => {
-            if (
-                event.target instanceof HTMLElement
-                && (event.target.isContentEditable || event.target.matches("input, textarea, select"))
-            ) {
-                return;
-            }
-
-            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
-                return;
-            }
-
-            const isInteractingWithProjects = pointerOverProjects
-                || projectCarousel.contains(document.activeElement)
-                || Array.from(projectArrows).includes(document.activeElement);
-            if (isInteractingWithProjects) {
-                event.preventDefault();
-                moveProjects(event.key === "ArrowRight" ? 1 : -1);
-            }
-        });
-        updateProjectArrows();
+        setupCarousel(projectCarousel, "data-project-direction");
+        setupCarousel(document.querySelector("#game-carousel"), "data-game-direction");
 
         if (!prefersReducedMotion && finePointer) {
             const blockScene = document.querySelector(".block-scene");
