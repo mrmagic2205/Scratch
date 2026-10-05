@@ -528,31 +528,55 @@
         }
 
         .adventure-art {
-            background:
-                radial-gradient(circle at 72% 28%, #ffdc75 0 10%, transparent 10.5%),
-                linear-gradient(160deg, transparent 0 48%, #0fbd8c 48% 70%, #08785b 70%),
-                linear-gradient(145deg, #4c97ff, #2864bf);
+            background: #218c31;
+        }
+
+        .adventure-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .rhythm-art {
-            background:
-                radial-gradient(circle at 25% 55%, #ffbf00 0 12%, transparent 12.5%),
-                radial-gradient(circle at 75% 35%, #0fbd8c 0 14%, transparent 14.5%),
-                linear-gradient(135deg, #30271d, #855cd6);
+            background: #00d5ed;
+        }
+
+        .rhythm-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .platform-art {
-            background:
-                linear-gradient(0deg, #0fbd8c 0 22%, transparent 22%),
-                radial-gradient(circle at 74% 28%, #ffbf00 0 9%, transparent 9.5%),
-                linear-gradient(145deg, #4c97ff, #2864bf);
+            background: #9264ff;
+        }
+
+        .platform-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .creative-art {
-            background:
-                radial-gradient(circle at 30% 35%, #4c97ff 0 15%, transparent 15.5%),
-                radial-gradient(circle at 70% 65%, #0fbd8c 0 16%, transparent 16.5%),
-                linear-gradient(135deg, #ffab19, #855cd6);
+            background: #5c5c5c;
+        }
+
+        .creative-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
         }
 
         .project-art span {
@@ -588,36 +612,24 @@
             font-size: 0.9rem;
         }
 
-        .skills-section {
+        .game-section {
             background: #f4efe6;
         }
 
-        .skill-list {
+        .game-embed {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 0.8rem;
+            justify-items: center;
         }
 
-        .skill-item {
-            display: flex;
-            min-height: 76px;
-            align-items: center;
-            gap: 0.8rem;
-            padding: 1rem;
-            border: 1px solid rgb(48 39 29 / 9%);
-            border-radius: 6px;
+        .game-embed iframe {
+            display: block;
+            width: 100%;
+            max-width: 485px;
+            aspect-ratio: 485 / 402;
+            border: 0;
+            border-radius: 8px;
             background: #fffdf9;
-            font-weight: 800;
-            transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
-        }
-
-        .skill-swatch {
-            width: 14px;
-            aspect-ratio: 1;
-            flex: 0 0 auto;
-            border-radius: 4px;
-            background: var(--swatch);
-            transition: transform 180ms ease;
+            box-shadow: 0 12px 30px rgb(48 39 29 / 15%);
         }
 
         .contact-section {
@@ -699,16 +711,6 @@
                 transform: translateY(-4px);
             }
 
-            .skill-item:hover {
-                border-color: var(--scratch);
-                box-shadow: 0 8px 18px rgb(48 39 29 / 9%);
-                transform: translateY(-3px);
-            }
-
-            .skill-item:hover .skill-swatch {
-                transform: rotate(12deg) scale(1.2);
-            }
-
             .project-card:hover .project-art {
                 filter: saturate(1.2);
             }
@@ -726,6 +728,22 @@
             }
 
             .project-card:hover .puzzle-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .platform-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .adventure-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .creative-art img {
+                transform: scale(1.04);
+            }
+
+            .project-card:hover .rhythm-art img {
                 transform: scale(1.04);
             }
 
@@ -816,9 +834,6 @@
                 flex-basis: calc((100% - 1.1rem) / 2);
             }
 
-            .skill-list {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
         }
 
         @media (max-width: 520px) {
@@ -838,10 +853,6 @@
             .section-heading h2,
             .about-copy h2 {
                 font-size: 2.25rem;
-            }
-
-            .skill-list {
-                grid-template-columns: 1fr;
             }
 
             .project-card {
@@ -894,7 +905,7 @@
             <a class="nav-link" href="#home" aria-current="location">Home</a>
             <a class="nav-link" href="#about">Über mich</a>
             <a class="nav-link" href="#projekte">Projekte</a>
-            <a class="nav-link" href="#skills">Skills</a>
+            <a class="nav-link" href="#spiel">Spiel</a>
             <a class="nav-link" href="#kontakt">Kontakt</a>
             <a class="nav-link" href="#impressum">Impressum</a>
         </nav>
@@ -939,7 +950,7 @@
             <div class="section-heading reveal">
                 <p class="section-label">02 / Aus dem Studio</p>
                 <h2>Meine Scratch-Projekte</h2>
-                <p>"von meinem ersten Spiel bis zu meinem Besten: Alles dabei!"</p>
+                <p>Von meinem ersten Spiel bis zu meinem Besten: Alles dabei!</p>
             </div>
             <div class="project-carousel-shell">
                 <div class="project-grid" id="project-carousel" role="region" aria-label="Scratch-Projekte, mit den Pfeiltasten navigierbar" tabindex="0">
@@ -948,9 +959,9 @@
                         <img src="assets/arcade-game.png" alt="Screenshot des Arcade-Spiels mit Figuren, Sternen und Boost- sowie Gesundheitsanzeige">
                     </div>
                     <div class="project-info">
-                        <p class="project-type">Spiel</p>
+                        <p class="project-type">Labyrinth</p>
                         <h3>Mein bekanntestes Projekt</h3>
-                        <p>Ergänze hier den Namen und die Idee deines Spiels.</p>
+                        <p>Du Steuerst eine Figur durch ein Labyrinth und sammelst Sterne, während die Monster dich verfolgen.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
@@ -958,9 +969,9 @@
                         <img src="assets/story-game.png" alt="Screenshot einer interaktiven Geschichte mit einer Figur in einem blauen Neon-Tunnel">
                     </div>
                     <div class="project-info">
-                        <p class="project-type">Interaktive Geschichte</p>
-                        <h3>Deine Geschichte</h3>
-                        <p>Zeig, wohin deine Figuren als Nächstes reisen.</p>
+                        <p class="project-type">Jumper</p>
+                        <h3>Mein Erstes Projekt</h3>
+                        <p>Springe über Bälle, während dein Freund dich nervt.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
@@ -969,8 +980,8 @@
                     </div>
                     <div class="project-info">
                         <p class="project-type">Animation</p>
-                        <h3>Dein Experiment</h3>
-                        <p>Ein Platz für Bewegung, Sound und verrückte Ideen.</p>
+                        <h3>Unendlicher Hintergrund</h3>
+                        <p>Scratchcat rennt unermüdlich durch die Landschaft.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
@@ -978,41 +989,49 @@
                         <img src="assets/puzzle-game.png" alt="Screenshot eines gelben Labyrinth-Puzzles mit einem roten Spieler und einem blauen Ziel">
                     </div>
                     <div class="project-info">
-                        <p class="project-type">Spiel</p>
-                        <h3>Ein neues Puzzle</h3>
-                        <p>Ergänze hier den Namen und die Idee deines Projekts.</p>
+                        <p class="project-type">Puzzle</p>
+                        <h3>2D Labyrinth</h3>
+                        <p>Steuer eine Figur durch ein 2D-Labyrinth und versuche zum Ziel zu gelangen.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art adventure-art" aria-hidden="true"><span>ABENTEUER</span></div>
+                    <div class="project-art adventure-art">
+                        <img src="assets/adventure-game.png" alt="Screenshot eines grünen Scratch-Abenteuers mit Figuren, Punkten und einer Energieleiste">
+                    </div>
                     <div class="project-info">
                         <p class="project-type">Abenteuer</p>
-                        <h3>Dein nächstes Abenteuer</h3>
-                        <p>Hier ist Platz für dein nächstes Scratch-Projekt.</p>
+                        <h3>Zombie-Apokalypse</h3>
+                        <p>wehre Zombies ab und upgrade deine Waffen.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art rhythm-art" aria-hidden="true"><span>MUSIK</span></div>
+                    <div class="project-art rhythm-art">
+                        <img src="assets/rhythm-game.png" alt="Screenshot eines Rhythmus-Spiels mit cyanfarbenen Plattformen, Hindernissen und der Anzeige „Ende!“">
+                    </div>
                     <div class="project-info">
-                        <p class="project-type">Musik</p>
-                        <h3>Dein Rhythmus-Spiel</h3>
-                        <p>Verbinde Musik und Bewegung in deinem nächsten Projekt.</p>
+                        <p class="project-type">Reaktionszeit</p>
+                        <h3>Schnelles Reagieren</h3>
+                        <p>Reagiere schnell auf die ankommenden Hindernisse.</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art platform-art" aria-hidden="true"><span>PLATTFORM</span></div>
+                    <div class="project-art platform-art">
+                        <img src="assets/platform-game.png" alt="Screenshot eines lila Plattformspiels mit einem blauen Charakter und dem Ziel „Next Level“">
+                    </div>
                     <div class="project-info">
                         <p class="project-type">Plattformspiel</p>
                         <h3>Auf zur nächsten Ebene</h3>
-                        <p>Springe, sammle Punkte und entdecke neue Wege.</p>
+                        <p>Springe so schnell du kannst zum Ziel, aber passe auf die Fallen auf!</p>
                     </div>
                 </article>
                 <article class="project-card reveal">
-                    <div class="project-art creative-art" aria-hidden="true"><span>KREATIV</span></div>
+                    <div class="project-art creative-art">
+                        <img src="assets/creative-game.png" alt="Screenshot eines Scratch-Autorennspiels mit bunten Autos auf einer grauen Straße">
+                    </div>
                     <div class="project-info">
-                        <p class="project-type">Kreativ-Projekt</p>
-                        <h3>Deine eigene Idee</h3>
-                        <p>Ein freier Platz für etwas ganz Neues.</p>
+                        <p class="project-type">Autos</p>
+                        <h3>Autorennen quer durch die Stadt</h3>
+                        <p>Steuer dein Auto durch die Stadt und versuche, den Bestzeit zu schlagen.</p>
                     </div>
                 </article>
                 </div>
@@ -1023,17 +1042,21 @@
             </div>
         </section>
 
-        <section class="section skills-section" id="skills">
+        <section class="section game-section" id="spiel">
             <div class="section-heading reveal">
-                <p class="section-label">03 / Meine Werkzeugkiste</p>
-                <h2>Block für Block.</h2>
-                <p>Die Scratch-Bereiche, mit denen Ideen Form annehmen.</p>
+                <p class="section-label">03 / Zum Ausprobieren</p>
+                <h2>Spiel</h2>
             </div>
-            <div class="skill-list reveal">
-                <div class="skill-item"><span class="skill-swatch" style="--swatch: #4c97ff"></span>Bewegung</div>
-                <div class="skill-item"><span class="skill-swatch" style="--swatch: #855cd6"></span>Aussehen</div>
-                <div class="skill-item"><span class="skill-swatch" style="--swatch: #ffab19"></span>Ereignisse</div>
-                <div class="skill-item"><span class="skill-swatch" style="--swatch: #ffbf00"></span>Steuerung</div>
+            <div class="game-embed reveal">
+                <iframe
+                    src="https://scratch.mit.edu/projects/1252260834/embed"
+                    title="Scratch-Spiel"
+                    allowtransparency="true"
+                    width="485"
+                    height="402"
+                    scrolling="no"
+                    allowfullscreen>
+                </iframe>
             </div>
         </section>
 
@@ -1050,6 +1073,7 @@
             <div class="section-heading reveal">
                 <p class="section-label">05 / Rechtliches</p>
                 <h2>Impressum</h2>
+                <p>Angaben gemäß § 5 TMG</p>
                 <p></p>
             </div>
         </section>
