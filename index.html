@@ -361,18 +361,85 @@
             text-transform: uppercase;
         }
 
+        .project-carousel-shell {
+            position: relative;
+            padding-inline: 4.5rem;
+        }
+
         .project-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            display: flex;
             gap: 1.1rem;
+            overflow-x: auto;
+            padding: 0.5rem 0 1rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .project-grid::-webkit-scrollbar {
+            display: none;
         }
 
         .project-card {
+            flex: 0 0 calc((100% - 2.2rem) / 3);
             overflow: hidden;
             border: 1px solid var(--line);
             border-radius: 8px;
             background: #fffdf9;
+            scroll-snap-align: start;
             transition: box-shadow 180ms ease, transform 180ms ease;
+        }
+
+        .project-grid:focus-visible {
+            outline: 3px solid var(--scratch-deep);
+            outline-offset: 4px;
+        }
+
+        .project-controls {
+            display: flex;
+            position: absolute;
+            z-index: 2;
+            inset: 50% 0 auto;
+            align-items: center;
+            justify-content: space-between;
+            padding-inline: 0.15rem;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .project-arrow {
+            display: grid;
+            width: 52px;
+            aspect-ratio: 1;
+            place-items: center;
+            border: 2px solid var(--scratch);
+            border-radius: 50%;
+            color: var(--ink);
+            background: #fffaf1;
+            box-shadow: 0 5px 15px rgb(48 39 29 / 18%), 0 0 0 4px rgb(255 171 25 / 16%);
+            cursor: pointer;
+            font: inherit;
+            font-size: 1.6rem;
+            font-weight: 900;
+            line-height: 1;
+            pointer-events: auto;
+            transition: background-color 180ms ease, box-shadow 180ms ease, color 180ms ease, scale 180ms ease;
+        }
+
+        .project-arrow:hover:not(:disabled) {
+            color: var(--ink);
+            background: var(--scratch);
+            box-shadow: 0 7px 18px rgb(48 39 29 / 22%), 0 0 0 6px rgb(255 171 25 / 20%);
+            scale: 1.1;
+        }
+
+        .project-arrow:focus-visible {
+            outline: 3px solid var(--scratch-deep);
+            outline-offset: 3px;
+        }
+
+        .project-arrow:disabled {
+            cursor: not-allowed;
+            opacity: 0.4;
         }
 
         .project-card:hover {
@@ -445,6 +512,47 @@
             min-height: inherit;
             object-fit: cover;
             transition: transform 220ms ease;
+        }
+
+        .puzzle-art {
+            background: #fff52e;
+        }
+
+        .puzzle-art img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            min-height: inherit;
+            object-fit: cover;
+            transition: transform 220ms ease;
+        }
+
+        .adventure-art {
+            background:
+                radial-gradient(circle at 72% 28%, #ffdc75 0 10%, transparent 10.5%),
+                linear-gradient(160deg, transparent 0 48%, #0fbd8c 48% 70%, #08785b 70%),
+                linear-gradient(145deg, #4c97ff, #2864bf);
+        }
+
+        .rhythm-art {
+            background:
+                radial-gradient(circle at 25% 55%, #ffbf00 0 12%, transparent 12.5%),
+                radial-gradient(circle at 75% 35%, #0fbd8c 0 14%, transparent 14.5%),
+                linear-gradient(135deg, #30271d, #855cd6);
+        }
+
+        .platform-art {
+            background:
+                linear-gradient(0deg, #0fbd8c 0 22%, transparent 22%),
+                radial-gradient(circle at 74% 28%, #ffbf00 0 9%, transparent 9.5%),
+                linear-gradient(145deg, #4c97ff, #2864bf);
+        }
+
+        .creative-art {
+            background:
+                radial-gradient(circle at 30% 35%, #4c97ff 0 15%, transparent 15.5%),
+                radial-gradient(circle at 70% 65%, #0fbd8c 0 16%, transparent 16.5%),
+                linear-gradient(135deg, #ffab19, #855cd6);
         }
 
         .project-art span {
@@ -617,6 +725,10 @@
                 transform: scale(1.04);
             }
 
+            .project-card:hover .puzzle-art img {
+                transform: scale(1.04);
+            }
+
             .project-card:hover .project-art span {
                 background: rgb(30 30 30 / 38%);
                 transform: scale(1.08) rotate(-2deg);
@@ -700,8 +812,8 @@
                 min-height: 180px;
             }
 
-            .project-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+            .project-card {
+                flex-basis: calc((100% - 1.1rem) / 2);
             }
 
             .skill-list {
@@ -728,9 +840,21 @@
                 font-size: 2.25rem;
             }
 
-            .project-grid,
             .skill-list {
                 grid-template-columns: 1fr;
+            }
+
+            .project-card {
+                flex-basis: 100%;
+            }
+
+            .project-carousel-shell {
+                padding-inline: 3.3rem;
+            }
+
+            .project-arrow {
+                width: 44px;
+                font-size: 1.35rem;
             }
 
             .project-art {
@@ -814,17 +938,18 @@
         <section class="section projects-section" id="projekte">
             <div class="section-heading reveal">
                 <p class="section-label">02 / Aus dem Studio</p>
-                <h2>Projekte mit Spielfreude.</h2>
-                <p>Spiele, Geschichten und kleine Experimente. Hier ist Platz für deine Scratch-Projekte.</p>
+                <h2>Meine Scratch-Projekte</h2>
+                <p>"von meinem ersten Spiel bis zu meinem Besten: Alles dabei!"</p>
             </div>
-            <div class="project-grid">
+            <div class="project-carousel-shell">
+                <div class="project-grid" id="project-carousel" role="region" aria-label="Scratch-Projekte, mit den Pfeiltasten navigierbar" tabindex="0">
                 <article class="project-card reveal">
                     <div class="project-art arcade-art">
                         <img src="assets/arcade-game.png" alt="Screenshot des Arcade-Spiels mit Figuren, Sternen und Boost- sowie Gesundheitsanzeige">
                     </div>
                     <div class="project-info">
                         <p class="project-type">Spiel</p>
-                        <h3>Dein Arcade-Spiel</h3>
+                        <h3>Mein bekanntestes Projekt</h3>
                         <p>Ergänze hier den Namen und die Idee deines Spiels.</p>
                     </div>
                 </article>
@@ -848,6 +973,53 @@
                         <p>Ein Platz für Bewegung, Sound und verrückte Ideen.</p>
                     </div>
                 </article>
+                <article class="project-card reveal">
+                    <div class="project-art puzzle-art">
+                        <img src="assets/puzzle-game.png" alt="Screenshot eines gelben Labyrinth-Puzzles mit einem roten Spieler und einem blauen Ziel">
+                    </div>
+                    <div class="project-info">
+                        <p class="project-type">Spiel</p>
+                        <h3>Ein neues Puzzle</h3>
+                        <p>Ergänze hier den Namen und die Idee deines Projekts.</p>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-art adventure-art" aria-hidden="true"><span>ABENTEUER</span></div>
+                    <div class="project-info">
+                        <p class="project-type">Abenteuer</p>
+                        <h3>Dein nächstes Abenteuer</h3>
+                        <p>Hier ist Platz für dein nächstes Scratch-Projekt.</p>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-art rhythm-art" aria-hidden="true"><span>MUSIK</span></div>
+                    <div class="project-info">
+                        <p class="project-type">Musik</p>
+                        <h3>Dein Rhythmus-Spiel</h3>
+                        <p>Verbinde Musik und Bewegung in deinem nächsten Projekt.</p>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-art platform-art" aria-hidden="true"><span>PLATTFORM</span></div>
+                    <div class="project-info">
+                        <p class="project-type">Plattformspiel</p>
+                        <h3>Auf zur nächsten Ebene</h3>
+                        <p>Springe, sammle Punkte und entdecke neue Wege.</p>
+                    </div>
+                </article>
+                <article class="project-card reveal">
+                    <div class="project-art creative-art" aria-hidden="true"><span>KREATIV</span></div>
+                    <div class="project-info">
+                        <p class="project-type">Kreativ-Projekt</p>
+                        <h3>Deine eigene Idee</h3>
+                        <p>Ein freier Platz für etwas ganz Neues.</p>
+                    </div>
+                </article>
+                </div>
+                <div class="project-controls" aria-label="Projekt-Navigation">
+                    <button class="project-arrow" type="button" data-project-direction="-1" aria-label="Vorheriges Projekt" disabled>←</button>
+                    <button class="project-arrow" type="button" data-project-direction="1" aria-label="Nächstes Projekt">→</button>
+                </div>
             </div>
         </section>
 
@@ -936,6 +1108,89 @@
 
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const projectCarousel = document.querySelector("#project-carousel");
+        const projectCards = projectCarousel.querySelectorAll(".project-card");
+        const projectArrows = document.querySelectorAll(".project-arrow");
+        let pointerOverProjects = false;
+        let projectScrollAnimation = 0;
+
+        const cancelProjectScroll = () => {
+            cancelAnimationFrame(projectScrollAnimation);
+            projectScrollAnimation = 0;
+            projectCarousel.style.removeProperty("scroll-snap-type");
+        };
+
+        const updateProjectArrows = () => {
+            const maxScroll = projectCarousel.scrollWidth - projectCarousel.clientWidth;
+            projectArrows.forEach((button) => {
+                const direction = Number(button.dataset.projectDirection);
+                button.disabled = direction < 0
+                    ? projectCarousel.scrollLeft <= 1
+                    : projectCarousel.scrollLeft >= maxScroll - 1;
+            });
+        };
+
+        const moveProjects = (direction) => {
+            const card = projectCards[0];
+            const cardGap = Number.parseFloat(getComputedStyle(projectCarousel).columnGap) || 0;
+            const maxScroll = projectCarousel.scrollWidth - projectCarousel.clientWidth;
+            const start = projectCarousel.scrollLeft;
+            const target = Math.max(0, Math.min(maxScroll, start + direction * (card.getBoundingClientRect().width + cardGap)));
+
+            cancelProjectScroll();
+            if (prefersReducedMotion) {
+                projectCarousel.scrollLeft = target;
+                return;
+            }
+
+            projectCarousel.style.scrollSnapType = "none";
+            const duration = 420;
+            const startedAt = performance.now();
+            const animateScroll = (now) => {
+                const progress = Math.min((now - startedAt) / duration, 1);
+                const easedProgress = 1 - (1 - progress) ** 3;
+                projectCarousel.scrollLeft = start + (target - start) * easedProgress;
+                if (progress < 1) {
+                    projectScrollAnimation = requestAnimationFrame(animateScroll);
+                } else {
+                    projectScrollAnimation = 0;
+                    projectCarousel.style.removeProperty("scroll-snap-type");
+                }
+            };
+            projectScrollAnimation = requestAnimationFrame(animateScroll);
+        };
+
+        projectArrows.forEach((button) => {
+            button.addEventListener("click", () => moveProjects(Number(button.dataset.projectDirection)));
+        });
+        projectCarousel.addEventListener("wheel", cancelProjectScroll, { passive: true });
+        projectCarousel.addEventListener("pointerdown", cancelProjectScroll, { passive: true });
+        projectCarousel.addEventListener("touchstart", cancelProjectScroll, { passive: true });
+        projectCarousel.addEventListener("scroll", updateProjectArrows, { passive: true });
+        window.addEventListener("resize", updateProjectArrows);
+        projectCarousel.addEventListener("pointerenter", () => { pointerOverProjects = true; });
+        projectCarousel.addEventListener("pointerleave", () => { pointerOverProjects = false; });
+        window.addEventListener("keydown", (event) => {
+            if (
+                event.target instanceof HTMLElement
+                && (event.target.isContentEditable || event.target.matches("input, textarea, select"))
+            ) {
+                return;
+            }
+
+            if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") {
+                return;
+            }
+
+            const isInteractingWithProjects = pointerOverProjects
+                || projectCarousel.contains(document.activeElement)
+                || Array.from(projectArrows).includes(document.activeElement);
+            if (isInteractingWithProjects) {
+                event.preventDefault();
+                moveProjects(event.key === "ArrowRight" ? 1 : -1);
+            }
+        });
+        updateProjectArrows();
 
         if (!prefersReducedMotion && finePointer) {
             const blockScene = document.querySelector(".block-scene");
