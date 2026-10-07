@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+https://mrmagic2205.github.io/Scratch/
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +27,7 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            scroll-behavior:smooth;
             scroll-padding-top: 100px;
         }
 
@@ -250,7 +251,6 @@
                 radial-gradient(rgb(150 84 0 / 13%) 1px, transparent 1px);
             background-position: center;
             background-size: auto, 19px 19px;
-            transform: rotate(1.5deg);
         }
 
         .scene-caption,
@@ -274,40 +274,16 @@
             bottom: 1.2rem;
         }
 
-        .block-stack {
-            display: grid;
-            gap: 5px;
-            width: min(340px, calc(100% - 2rem));
-            transform: rotate(-4deg);
+        .blocks-art-wrap {
+            transition: transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        .code-block {
-            width: fit-content;
-            max-width: 100%;
-            padding: 0.65rem 0.9rem;
-            border-radius: 7px;
-            color: #fff;
-            box-shadow: 0 4px 0 rgb(48 39 29 / 16%);
-            font-size: 0.84rem;
-            font-weight: 800;
-            animation: block-float 3.2s ease-in-out infinite alternate;
+        .blocks-art {
+            display: block;
+            width: min(230px, calc(100% - 2rem));
+            height: auto;
+            animation: block-glow 3.6s ease-in-out infinite;
         }
-
-        .code-block strong {
-            display: inline-grid;
-            min-width: 27px;
-            min-height: 25px;
-            place-items: center;
-            margin-inline: 0.25rem;
-            border-radius: 4px;
-            color: var(--ink);
-            background: #fff;
-        }
-
-        .event-block { background: var(--scratch); color: var(--ink); animation-delay: -0.3s; }
-        .motion-block { margin-left: 1rem; background: var(--blue); animation-delay: -1.2s; }
-        .loop-block { margin-left: 2rem; background: var(--yellow); color: var(--ink); animation-delay: -2s; }
-        .looks-block { margin-left: 3rem; background: var(--purple); animation-delay: -0.8s; }
 
         .section {
             padding: 6rem max(1.5rem, calc((100% - 1080px) / 2));
@@ -726,6 +702,10 @@
         }
 
         @media (hover: hover) and (pointer: fine) {
+            .block-scene:hover .blocks-art-wrap {
+                transform: translateY(-7px) scale(1.04) rotate(-1deg);
+            }
+
             .brand:hover .brand-mark {
                 transform: rotate(-6deg) scale(1.08);
             }
@@ -804,9 +784,16 @@
             transform: translateY(0);
         }
 
-        @keyframes block-float {
-            from { translate: 0 0; }
-            to { translate: 0 -8px; }
+        @keyframes block-glow {
+            0%,
+            100% {
+                filter: drop-shadow(0 5px 8px rgb(255 171 25 / 28%));
+                scale: 1;
+            }
+            50% {
+                filter: drop-shadow(0 7px 16px rgb(76 151 255 / 48%));
+                scale: 1.025;
+            }
         }
 
         @keyframes sparkle-burst {
@@ -953,11 +940,8 @@
                 </div>
                 <div class="block-scene reveal" role="img" aria-label="Bunte Scratch-Programmierblöcke für Ereignisse, Bewegung, Schleifen und Aussehen">
                     <span class="scene-caption">Ein kleiner Einblick</span>
-                    <div class="block-stack" aria-hidden="true">
-                        <div class="code-block event-block">Wenn die grüne Flagge angeklickt wird</div>
-                        <div class="code-block motion-block">gehe <strong>10</strong> Schritte</div>
-                        <div class="code-block loop-block">wiederhole <strong>10</strong> mal</div>
-                        <div class="code-block looks-block">sage <strong>Hallo!</strong></div>
+                    <div class="blocks-art-wrap">
+                        <img class="blocks-art" src="assets/scratch-block-stack.png" alt="" aria-hidden="true">
                     </div>
                     <span class="scene-note">Ein Klick. Tausend Möglichkeiten.</span>
                 </div>
